@@ -51,6 +51,7 @@ parts:
 
     configflags:
       - --prefix=/usr
+      - --sysconfdir=/etc
       - --libexec=/usr/lib/
       - --libdir=/usr/lib/
       - --disable-orc
