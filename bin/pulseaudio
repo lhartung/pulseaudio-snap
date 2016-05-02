@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+set -x
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/pulse-8.0/modules/
+
+$SNAP/usr/bin/pulseaudio \
+    --disable-shm=yes \
+    --exit-idle-time=-1 \
+    --disallow-exit=yes \
+    -F $SNAP/etc/pulse/default.pa \
+    -p $SNAP/usr/lib \
+    -n \
+    -vvvv
+

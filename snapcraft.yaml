@@ -1,0 +1,66 @@
+name: pulseaudio
+version: 8.0-1
+summary: Audio framework (contains PulseAudio and alsa-lib)
+description: Contains PulseAudio and its dependencies, to
+  enable apps to play back and record sound by talking to
+  PulseAudio.
+  Please find the source code at https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
+
+apps:
+  pulseaudio:
+    command: bin/pulseaudio
+  pactl:
+    command: bin/pactl
+  paplay:
+    command: bin/paplay
+
+parts:
+  pulseaudio-common:
+    plugin: copy
+    files:
+      bin/pulseaudio: bin/pulseaudio
+      bin/pactl: bin/pactl
+      bin/paplay: bin/paplay
+
+  pulseaudio:
+    plugin: autotools
+
+    source: http://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-8.0.tar.xz
+
+    # NOTE: Force autogen to be executed again even if the tarball already
+    # comes with a configure script but that links against aclocal-1.13
+    # which we don't profile anymore and will cause the build to fail.
+    force-autogen: true
+
+    build-packages:
+      - intltool
+      - libasound2-dev
+      - libdbus-1-dev
+      - libjson-c-dev
+      - libglib2.0-dev
+      - libspeexdsp-dev
+      - libbluetooth-dev
+      - libwebrtc-audio-processing-dev
+      - libltdl-dev
+      - libsndfile1-dev
+      - libx11-xcb-dev
+      - libx11-dev
+      - libtdb-dev
+      - libasyncns-dev
+      - libxcb1-dev
+
+    configflags:
+      - --prefix=/usr
+      - --libexec=/usr/lib/
+      - --libdir=/usr/lib/
+      - --disable-orc
+      - --disable-gconf
+      - --disable-bluez4
+      - --disable-bluez5
+      - --disable-esound
+      - --disable-adrian-aec
+      - --disable-gtk3
+      - --disable-hal-compat
+      - --disable-systemd-login
+      - --without-caps
+      - --disable-webrtc-aec
