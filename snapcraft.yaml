@@ -6,13 +6,25 @@ description: Contains PulseAudio and its dependencies, to
   PulseAudio.
   Please find the source code at https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
 
+slots:
+  service: pulseaudio
+plugs:
+  client: pulseaudio
+
 apps:
   pulseaudio:
     command: bin/pulseaudio
+    daemon: simple
+    slots: [service]
   pactl:
     command: bin/pactl
+    plugs: [client]
   paplay:
     command: bin/paplay
+    plugs: [client]
+  parec:
+    command: bin/parec
+    plugs: [client]
 
 parts:
   pulseaudio-common:
@@ -21,6 +33,7 @@ parts:
       bin/pulseaudio: bin/pulseaudio
       bin/pactl: bin/pactl
       bin/paplay: bin/paplay
+      bin/parec: bin/parec
 
   pulseaudio:
     plugin: autotools
@@ -46,14 +59,24 @@ parts:
       - libx11-xcb-dev
       - libx11-dev
       - libtdb-dev
+      - libudev-dev
       - libasyncns-dev
       - libxcb1-dev
+
+    stage-packages:
+      # Needed for various ALSA related configuration files the alsa
+      # module inside PulseAudio requires to use any available audio
+      # device properly
+      - libasound2-data
 
     configflags:
       - --prefix=/usr
       - --sysconfdir=/etc
-      - --libexec=/usr/lib/
-      - --libdir=/usr/lib/
+      - --libexec=/usr/lib
+      - --libdir=/usr/lib
+      - --localstatedir=/var
+      - --enable-udev
+      - --disable-rpath
       - --disable-orc
       - --disable-gconf
       - --disable-bluez4
@@ -65,3 +88,10 @@ parts:
       - --disable-systemd-login
       - --without-caps
       - --disable-webrtc-aec
+      - --disable-dbus
+      - --disable-oss-output
+      - --disable-oss-wrapper
+      - --disable-jack
+      - --disable-x11
+      - --with-system-user=root
+      - --with-system-group=root

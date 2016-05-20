@@ -1,7 +1,8 @@
 #!/bin/sh
-set -e
-set -x
-
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/pulse-8.0/modules/
+export PULSE_CLIENTCONFIG=$SNAP/etc/pulse/client.conf
+export HOME=$SNAP_DATA/home
+
+mkdir -p $HOME
 
 $SNAP/usr/bin/paplay $@

@@ -1,0 +1,29 @@
+From e748d859a062a6de37d999d0d5319efc6480ffd8 Mon Sep 17 00:00:00 2001
+From: Simon Fels <simon.fels@canonical.com>
+Date: Fri, 20 May 2016 08:01:05 +0200
+Subject: [PATCH] Prevent pulse from creating system state dir
+
+---
+ src/daemon/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/daemon/main.c b/src/daemon/main.c
+index 7734f52..8f58bd8 100644
+--- a/src/daemon/main.c
++++ b/src/daemon/main.c
+@@ -183,10 +183,12 @@ static int change_user(void) {
+         return -1;
+     }
+ 
++#if 0
+     if (pa_make_secure_dir(PA_SYSTEM_STATE_PATH, 0700, pw->pw_uid, gr->gr_gid, true) < 0) {
+         pa_log(_("Failed to create '%s': %s"), PA_SYSTEM_STATE_PATH, pa_cstrerror(errno));
+         return -1;
+     }
++#endif
+ 
+     /* We don't create the config dir here, because we don't need to write to it */
+ 
+-- 
+2.7.4
+

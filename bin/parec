@@ -5,4 +5,4 @@ export HOME=$SNAP_DATA/home
 
 mkdir -p $HOME
 
-$SNAP/usr/bin/pactl $@
+$SNAP/usr/bin/parec $@

@@ -1,0 +1,72 @@
+From 44bea3269ad61bfc30e12c805129c2230fd7c276 Mon Sep 17 00:00:00 2001
+From: Simon Fels <simon.fels@canonical.com>
+Date: Fri, 20 May 2016 12:38:10 +0200
+Subject: [PATCH] modules: alsa: adjust profile path in snappy environments
+
+---
+ src/modules/alsa/alsa-mixer.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
+
+diff --git a/src/modules/alsa/alsa-mixer.c b/src/modules/alsa/alsa-mixer.c
+index 1fe2a02..a3c486e 100644
+--- a/src/modules/alsa/alsa-mixer.c
++++ b/src/modules/alsa/alsa-mixer.c
+@@ -2529,10 +2529,19 @@ static int path_verify(pa_alsa_path *p) {
+ }
+ 
+ static const char *get_default_paths_dir(void) {
++    static char default_path[PATH_MAX] = { NULL };
++
+     if (pa_run_from_build_tree())
+         return PA_SRCDIR "/modules/alsa/mixer/paths/";
+-    else
++
++    const char *snap_data_path = getenv("SNAP");
++    if (!snap_data_path)
+         return PA_ALSA_PATHS_DIR;
++
++    snprintf(default_path, PATH_MAX, "%s%s", snap_data_path,
++             PA_ALSA_PATHS_DIR);
++
++    return default_path;
+ }
+ 
+ pa_alsa_path* pa_alsa_path_new(const char *paths_dir, const char *fname, pa_alsa_direction_t direction) {
+@@ -4357,6 +4366,23 @@ void pa_alsa_decibel_fix_dump(pa_alsa_decibel_fix *db_fix) {
+     pa_xfree(db_values);
+ }
+ 
++static const char *get_mixer_profile_sets_dir(void) {
++    static char profile_sets_path[PATH_MAX] = { NULL };
++
++    if (pa_run_from_build_tree())
++        return PA_SRCDIR "/modules/alsa/mixer/profile-sets";
++
++    const char *snap_data_path = getenv("SNAP");
++    if (!snap_data_path)
++        return PA_ALSA_PATHS_DIR;
++
++    snprintf(profile_sets_path, PATH_MAX, "%s%s", snap_data_path,
++             PA_ALSA_PROFILE_SETS_DIR);
++
++    return profile_sets_path;
++}
++
++
+ pa_alsa_profile_set* pa_alsa_profile_set_new(const char *fname, const pa_channel_map *bonus) {
+     pa_alsa_profile_set *ps;
+     pa_alsa_profile *p;
+@@ -4407,9 +4433,7 @@ pa_alsa_profile_set* pa_alsa_profile_set_new(const char *fname, const pa_channel
+     if (!fname)
+         fname = "default.conf";
+ 
+-    fn = pa_maybe_prefix_path(fname,
+-                              pa_run_from_build_tree() ? PA_SRCDIR "/modules/alsa/mixer/profile-sets/" :
+-                              PA_ALSA_PROFILE_SETS_DIR);
++    fn = pa_maybe_prefix_path(fname, get_mixer_profile_sets_dir());
+ 
+     r = pa_config_parse(fn, NULL, items, NULL, false, ps);
+     pa_xfree(fn);
+-- 
+2.7.4
+
