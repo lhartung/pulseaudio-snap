@@ -34,9 +34,11 @@ while [ "$1" != '' ]; do
 		--help)
 			show_help
 			exit
+			;;
 		enable-debug|disable-debug)
 			commands="$commands $1"
 			shift
+			;;
 		*)
 			echo "Unknown command: $1"
 			exit 1
@@ -48,17 +50,21 @@ if [ ! -d $SNAP_DATA/config ] ; then
 	mkdir $SNAP_DATA/config
 fi
 
-while [ -n "$commands" ]; do
-	case "$1" in
-		enable-debug)
-			if [ -e $SNAP_DATA/config/debug ] ; then
-				rm $SNAP_DATA/config/debug
-			fi
-			shift
-			;;
-		disable)
-			touch $SNAP_DATA/config/debug
-			shift
-			;;
-	esac
-done
+run_commands() {
+	while [ -n "$1" ]; do
+		case "$1" in
+			disable-debug)
+				if [ -e $SNAP_DATA/config/debug ] ; then
+					rm $SNAP_DATA/config/debug
+				fi
+				shift
+				;;
+			enable-debug)
+				touch $SNAP_DATA/config/debug
+				shift
+				;;
+		esac
+	done
+}
+
+run_commands $commands
