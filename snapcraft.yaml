@@ -5,27 +5,26 @@ description: Contains PulseAudio and its dependencies, to
   enable apps to play back and record sound by talking to
   PulseAudio.
   Please find the source code at https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
-
-slots:
-  service: pulseaudio
-plugs:
-  client: pulseaudio
 confinement: strict
 
 apps:
   pulseaudio:
     command: bin/pulseaudio
     daemon: simple
-    slots: [service]
+    slots:
+      - pulseaudio
   pactl:
     command: bin/pactl
-    plugs: [client]
+    plugs:
+      - pulseaudio
   paplay:
     command: bin/paplay
-    plugs: [client]
+    plugs:
+      - pulseaudio
   parec:
     command: bin/parec
-    plugs: [client]
+    plugs:
+      - pulseaudio
 
 parts:
   pulseaudio-common:
