@@ -28,6 +28,8 @@ apps:
     command: bin/parec
     plugs:
       - pulseaudio
+  config:
+    command: bin/config
 
 parts:
   pulseaudio-common:

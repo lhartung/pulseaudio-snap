@@ -9,6 +9,12 @@ export ALSA_CONFIG_PATH=$SNAP/usr/share/alsa/alsa.conf
 
 mkdir -p $PULSE_STATE_PATH
 
+EXTRA_ARGS=
+
+if [ -e $SNAP_DATA/config/debug ] ; then
+    EXTRA_ARGS="$EXTRA_ARGS -vvv"
+fi
+
 $SNAP/usr/bin/pulseaudio \
     --exit-idle-time=-1 \
     --disallow-exit=yes \
@@ -16,4 +22,4 @@ $SNAP/usr/bin/pulseaudio \
     -F $SNAP/etc/pulse/default.pa \
     -p $SNAP/usr/lib/pulse-8.0/modules \
     -n \
-    -vvvv
+    $EXTRA_ARGS
