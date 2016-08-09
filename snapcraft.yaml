@@ -38,12 +38,9 @@ parts:
   pulseaudio:
     plugin: autotools
 
-    source: http://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-8.0.tar.xz
-
-    # NOTE: Force autogen to be executed again even if the tarball already
-    # comes with a configure script but that links against aclocal-1.13
-    # which we don't profile anymore and will cause the build to fail.
-    force-autogen: true
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
+    source-type: git
+    source-branch: pulseaudio/8.0
 
     build-packages:
       - intltool
