@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+# Copyright (C) 2016 Canonical Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 3 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+export PATH="$PATH:$SNAP/sbin"
+
+show_help() {
+	echo "Usage: $0 COMMAND..."
+	echo
+	echo "Commands:"
+	echo "    enable-debug       Enable verbose debugging."
+	echo "    disable-debug      Disable verbose debugging."
+}
+
+if [ "$1" = "" ]; then
+	show_help
+	exit
+fi
+
+while [ "$1" != '' ]; do
+	case "$1" in
+		--help)
+			show_help
+			exit
+			;;
+		enable-debug|disable-debug)
+			commands="$commands $1"
+			shift
+			;;
+		*)
+			echo "Unknown command: $1"
+			exit 1
+			;;
+	esac
+done
+
+if [ ! -d $SNAP_DATA/config ] ; then
+	mkdir $SNAP_DATA/config
+fi
+
+run_commands() {
+	while [ -n "$1" ]; do
+		case "$1" in
+			disable-debug)
+				if [ -e $SNAP_DATA/config/debug ] ; then
+					rm $SNAP_DATA/config/debug
+				fi
+				shift
+				;;
+			enable-debug)
+				touch $SNAP_DATA/config/debug
+				shift
+				;;
+		esac
+	done
+}
+
+run_commands $commands

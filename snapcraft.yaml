@@ -1,0 +1,101 @@
+name: pulseaudio
+version: 8.0-1
+summary: PulseAudio sound server
+description: |
+  PulseAudio, previously known as Polypaudio, is a sound server for POSIX and
+  WIN32 systems. It is a drop in replacement for the ESD sound server with
+  much better latency, mixing/re-sampling quality and overall architecture.
+
+  Please find the source code for this snap at:
+  https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
+confinement: strict
+
+apps:
+  pulseaudio:
+    command: bin/pulseaudio
+    daemon: simple
+    slots:
+      - pulseaudio
+  pactl:
+    command: bin/pactl
+    plugs:
+      - pulseaudio
+  paplay:
+    command: bin/paplay
+    plugs:
+      - pulseaudio
+  parec:
+    command: bin/parec
+    plugs:
+      - pulseaudio
+  config:
+    command: bin/config
+
+parts:
+  pulseaudio-common:
+    plugin: copy
+    files:
+      bin/pulseaudio: bin/pulseaudio
+      bin/pactl: bin/pactl
+      bin/paplay: bin/paplay
+      bin/parec: bin/parec
+      bin/config: bin/config
+      data/copyright: usr/share/doc/pulseaudio/copyright
+
+  pulseaudio:
+    plugin: autotools
+
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
+    source-type: git
+    source-branch: pulseaudio/8.0
+
+    build-packages:
+      - intltool
+      - libasound2-dev
+      - libdbus-1-dev
+      - libjson-c-dev
+      - libglib2.0-dev
+      - libspeexdsp-dev
+      - libbluetooth-dev
+      - libwebrtc-audio-processing-dev
+      - libltdl-dev
+      - libsndfile1-dev
+      - libx11-xcb-dev
+      - libx11-dev
+      - libtdb-dev
+      - libudev-dev
+      - libasyncns-dev
+      - libxcb1-dev
+
+    stage-packages:
+      # Needed for various ALSA related configuration files the alsa
+      # module inside PulseAudio requires to use any available audio
+      # device properly
+      - libasound2-data
+
+    configflags:
+      - --prefix=/usr
+      - --sysconfdir=/etc
+      - --libexec=/usr/lib
+      - --libdir=/usr/lib
+      - --localstatedir=/var
+      - --enable-udev
+      - --disable-rpath
+      - --disable-orc
+      - --disable-gconf
+      - --disable-bluez4
+      - --disable-bluez5
+      - --disable-esound
+      - --disable-adrian-aec
+      - --disable-gtk3
+      - --disable-hal-compat
+      - --disable-systemd-login
+      - --without-caps
+      - --disable-webrtc-aec
+      - --disable-dbus
+      - --disable-oss-output
+      - --disable-oss-wrapper
+      - --disable-jack
+      - --disable-x11
+      - --with-system-user=root
+      - --with-system-group=root

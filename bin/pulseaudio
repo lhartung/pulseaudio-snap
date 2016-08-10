@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+set -x
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/pulse-8.0/modules/
+export PULSE_STATE_PATH=$SNAP_DATA/state
+export ALSA_CONFIG_UCM=$SNAP/usr/share/alsa/ucm
+export ALSA_CONFIG_PATH=$SNAP/usr/share/alsa/alsa.conf
+
+mkdir -p $PULSE_STATE_PATH
+
+EXTRA_ARGS=
+
+if [ -e $SNAP_DATA/config/debug ] ; then
+    EXTRA_ARGS="$EXTRA_ARGS -vvv"
+fi
+
+$SNAP/usr/bin/pulseaudio \
+    --exit-idle-time=-1 \
+    --disallow-exit=yes \
+    --system \
+    -F $SNAP/etc/pulse/default.pa \
+    -p $SNAP/usr/lib/pulse-8.0/modules \
+    -n \
+    $EXTRA_ARGS
