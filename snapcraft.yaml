@@ -39,6 +39,7 @@ parts:
       bin/pactl: bin/pactl
       bin/paplay: bin/paplay
       bin/parec: bin/parec
+      bin/config: bin/config
       data/copyright: usr/share/doc/pulseaudio/copyright
 
   pulseaudio:
