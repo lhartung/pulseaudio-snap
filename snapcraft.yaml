@@ -14,22 +14,24 @@ apps:
   pulseaudio:
     command: bin/pulseaudio
     daemon: simple
-    slots:
-      - pulseaudio
+    slots: [service]
   pactl:
     command: bin/pactl
-    plugs:
-      - pulseaudio
+    plugs: [client]
   paplay:
     command: bin/paplay
-    plugs:
-      - pulseaudio
+    plugs: [client]
   parec:
     command: bin/parec
-    plugs:
-      - pulseaudio
+    plugs: [client]
   config:
     command: bin/config
+slots:
+    service:
+        interface: pulseaudio
+plugs:
+    client:
+        interface: pulseaudio
 
 parts:
   pulseaudio-common:
@@ -99,3 +101,18 @@ parts:
       - --disable-x11
       - --with-system-user=root
       - --with-system-group=root
+    filesets:
+      allbutalsaconf: [ etc/*, lib/*, usr/*, -usr/share/alsa/* ]
+    stage:
+      - $allbutalsaconf
+
+  post-patch:
+    plugin: make
+    after:
+      - pulseaudio
+    source: .
+    filesets:
+      alsaconf: [ usr/share/alsa/* ]
+    stage:
+      - $alsaconf
+

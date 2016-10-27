@@ -5,14 +5,17 @@ set -x
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/pulse-8.0/modules/
 export PULSE_STATE_PATH=$SNAP_DATA/state
 export ALSA_CONFIG_UCM=$SNAP/usr/share/alsa/ucm
+export ALSA_CONFIG_TPLG=$SNAP/usr/share/alsa/topology
 export ALSA_CONFIG_PATH=$SNAP/usr/share/alsa/alsa.conf
+export ALSA_MIXER_SIMPLE=$SNAP/usr/share/alsa/smixer.conf
 
 mkdir -p $PULSE_STATE_PATH
 
 EXTRA_ARGS=
 
 if [ -e $SNAP_DATA/config/debug ] ; then
-    EXTRA_ARGS="$EXTRA_ARGS -vvv"
+    EXTRA_ARGS="$EXTRA_ARGS -vvvv"
+	export LIBASOUND_DEBUG=1
 fi
 
 $SNAP/usr/bin/pulseaudio \
