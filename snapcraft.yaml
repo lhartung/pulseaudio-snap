@@ -106,11 +106,11 @@ parts:
     stage:
       - $allbutalsaconf
 
-  post-patch:
+  libasound2-data-patch:
     plugin: make
     after:
       - pulseaudio
-    source: .
+    source: ./libasound2-data-patch
     filesets:
       alsaconf: [ usr/share/alsa/* ]
     stage:
