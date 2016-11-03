@@ -8,6 +8,7 @@ description: |
 
   Please find the source code for this snap at:
   https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
+grade: stable
 confinement: strict
 
 apps:
@@ -20,7 +21,7 @@ apps:
     plugs: [client]
   paplay:
     command: bin/paplay
-    plugs: [client]
+    plugs: [client,home]
   parec:
     command: bin/parec
     plugs: [client]
@@ -32,6 +33,14 @@ slots:
 plugs:
     client:
         interface: pulseaudio
+
+slots:
+  service:
+    interface: pulseaudio
+
+plugs:
+  client:
+    interface: pulseaudio
 
 parts:
   pulseaudio-common:
