@@ -1,0 +1,12 @@
+summary: Test for common PuleAudio modules being loaded
+
+execute: |
+    # Check for some obvious PulseAudio modules
+    pactl list short | grep 'module-device-restore'
+    pactl list short | grep 'module-stream-restore'
+    pactl list short | grep 'module-card-restore'
+    pactl list short | grep 'module-switch-on-port-available'
+    pactl list short | grep 'module-rescue-streams'
+    pactl list short | grep 'module-suspend-on-idle'
+    pactl list short | grep 'module-systemd-login'
+
