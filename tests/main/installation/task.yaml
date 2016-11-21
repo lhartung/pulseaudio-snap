@@ -8,5 +8,5 @@ execute: |
     pulseaudio.pactl --version
 
     # Ensure all necessary plugs/slots are connected
-    snap interfaces | grep -Pzq "pulseaudio:service pulseaudio:client"
+    snap interfaces | grep -Pzq "pulseaudio:service +pulseaudio:client"
     snap interfaces | grep -Pzq "\- pulseaudio:home"
