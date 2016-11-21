@@ -1,5 +1,5 @@
 name: pulseaudio
-version: 8.0-1
+version: 8.0-2
 summary: PulseAudio sound server
 description: |
   PulseAudio, previously known as Polypaudio, is a sound server for POSIX and
@@ -27,12 +27,6 @@ apps:
     plugs: [client]
   config:
     command: bin/config
-slots:
-    service:
-        interface: pulseaudio
-plugs:
-    client:
-        interface: pulseaudio
 
 slots:
   service:
@@ -53,7 +47,38 @@ parts:
       bin/config: bin/config
       data/copyright: usr/share/doc/pulseaudio/copyright
 
+  alsa-lib:
+    plugin: autotools
+
+    source: https://git.launchpad.net/~robertliu/snappy-hwe-snaps/+git/pulseaudio
+    source-type: git
+    source-branch: alsa-lib/1.1.0
+
+    configflags:
+      - --prefix=/usr
+      - --sysconfdir=/etc
+      - --libexec=/usr/lib
+      - --libdir=/usr/lib
+      - --localstatedir=/var
+      - --with-plugindir=/usr/lib/alsa-lib
+      - --disable-silent-rules
+      - --disable-static
+      - --disable-python
+
+    filesets:
+      libasound2:
+        - usr/lib/libasound.so*
+        - usr/lib/alsa-lib/*
+        - usr/share/alsa/*
+
+    snap:
+      - $libasound2
+
+
   pulseaudio:
+    after:
+      - alsa-lib
+
     plugin: autotools
 
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
@@ -77,12 +102,6 @@ parts:
       - libudev-dev
       - libasyncns-dev
       - libxcb1-dev
-
-    stage-packages:
-      # Needed for various ALSA related configuration files the alsa
-      # module inside PulseAudio requires to use any available audio
-      # device properly
-      - libasound2-data
 
     configflags:
       - --prefix=/usr
@@ -110,18 +129,22 @@ parts:
       - --disable-x11
       - --with-system-user=root
       - --with-system-group=root
-    filesets:
-      allbutalsaconf: [ etc/*, lib/*, usr/*, -usr/share/alsa/* ]
-    stage:
-      - $allbutalsaconf
 
-  libasound2-data-patch:
-    plugin: make
-    after:
-      - pulseaudio
-    source: ./libasound2-data-patch
     filesets:
-      alsaconf: [ usr/share/alsa/* ]
-    stage:
-      - $alsaconf
+      pauseaudiofiles:
+        - etc/*
+        - lib/*
+        - usr/bin/pacat
+        - usr/bin/pactl
+        - usr/bin/paplay
+        - usr/bin/parec
+        - usr/bin/pulseaudio
+        - usr/lib/libpulse-mainloop-glib.so*
+        - usr/lib/libpulse-simple.so*
+        - usr/lib/libpulse.so*
+        - usr/lib/pulse-8.0/*
+        - usr/lib/pulseaudio/*.so
+        - usr/share/pulseaudio/*
 
+    snap:
+      - $pauseaudiofiles
