@@ -1,16 +1,5 @@
 #!/bin/bash
 
-if [ $SPREAD_REBOOT -ge 1 ] ; then
-	# Give system a moment to settle
-	sleep 2
-
-	# For debugging dump all snaps and connected slots/plugs
-	snap list
-	snap interfaces
-
-	exit 0
-fi
-
 echo "Wait for firstboot change to be ready"
 while ! snap changes | grep -q "Done"; do
 	snap changes || true
@@ -32,9 +21,31 @@ done
 echo "Kernel has a store revision"
 snap list | grep ^${kernel_name} | grep -E " [0-9]+\s+canonical"
 
+# If we don't install pulseaudio here we get a system
+# without any network connectivity after reboot.
+if [ -n "$SNAP_CHANNEL" ] ; then
+	# Don't reinstall if we have it installed already
+	if ! snap list | grep pulseaudio ; then
+		snap install --$SNAP_CHANNEL pulseaudio
+	fi
+	echo "USING-CHANNEL"
+else
+	echo "INSTALLING-PULSEAUDIO-SNAP"
+	# Install prebuilt pulseaudio snap
+	snap install --dangerous /home/pulseaudio/pulseaudio_*_amd64.snap
+	# As we have a snap which we build locally its unasserted and therefor
+	# we don't have any snap-declarations in place and need to manually
+	# connect all plugs.
+	snap connect pulseaudio:client pulseaudio:service
+fi
+
 # Snapshot of the current snapd state for a later restore
 if [ ! -f $SPREAD_PATH/snapd-state.tar.gz ] ; then
 	systemctl stop snapd.service snapd.socket
 	tar czf $SPREAD_PATH/snapd-state.tar.gz /var/lib/snapd
 	systemctl start snapd.socket
 fi
+
+# For debugging dump all snaps and connected slots/plugs
+snap list
+snap interfaces

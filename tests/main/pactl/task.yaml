@@ -2,5 +2,5 @@ summary: Test pactl is working
 
 execute: |
     # Does it even work?
-    pactl info | fgrep 'Server Name: pulseaudio'
+    /snap/bin/pulseaudio.pactl info | grep -Pzq 'Server Name: pulseaudio'
 
