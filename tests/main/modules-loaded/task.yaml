@@ -8,5 +8,4 @@ execute: |
     /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-switch-on-port-available'
     /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-rescue-streams'
     /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-suspend-on-idle'
-    /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-systemd-login'
 
