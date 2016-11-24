@@ -50,9 +50,9 @@ parts:
   alsa-lib:
     plugin: autotools
 
-    source: https://git.launchpad.net/~robertliu/snappy-hwe-snaps/+git/pulseaudio
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pulseaudio
     source-type: git
-    source-branch: alsa-lib/1.1.0
+    source-branch: alsa-lib/xenial/1.1.0
 
     configflags:
       - --prefix=/usr
