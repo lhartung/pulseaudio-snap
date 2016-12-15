@@ -31,12 +31,12 @@ if [ -n "$SNAP_CHANNEL" ] ; then
 	echo "USING-CHANNEL"
 else
 	echo "INSTALLING-PULSEAUDIO-SNAP"
-	# Install prebuilt pulseaudio snap
+        # Install prebuilt pulseaudio snap but first install if from
+	# the store to work around the fact that we are not allowed
+	# anymore to connect pulseaudio slot to a snap installed with
+	# --dangerous
+	snap install --beta pulseaudio
 	snap install --dangerous /home/pulseaudio/pulseaudio_*_amd64.snap
-	# As we have a snap which we build locally its unasserted and therefor
-	# we don't have any snap-declarations in place and need to manually
-	# connect all plugs.
-	snap connect pulseaudio:client pulseaudio:service
 fi
 
 # Snapshot of the current snapd state for a later restore
