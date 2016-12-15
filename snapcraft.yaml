@@ -24,7 +24,7 @@ apps:
     plugs: [client, home, network]
   parec:
     command: bin/parec
-    plugs: [client, network]
+    plugs: [client, home, network]
   config:
     command: bin/config
 
