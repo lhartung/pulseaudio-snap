@@ -18,13 +18,13 @@ apps:
     slots: [service]
   pactl:
     command: bin/pactl
-    plugs: [client]
+    plugs: [client, network]
   paplay:
     command: bin/paplay
-    plugs: [client,home]
+    plugs: [client, home, network]
   parec:
     command: bin/parec
-    plugs: [client]
+    plugs: [client, network]
   config:
     command: bin/config
 
