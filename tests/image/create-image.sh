@@ -21,7 +21,7 @@ if [ $(id -u) -ne 0 ] ; then
 	exit 1
 fi
 
-channel=candidate
+channel=stable
 if [ ! -z "$1" ] ; then
 	channel=$1
 fi
