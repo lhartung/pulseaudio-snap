@@ -6,12 +6,13 @@ if [ -n "$SNAP_CHANNEL" ] ; then
 	exit 0
 fi
 
-# Setup classic snap and build the network-manager snap in there
+# Setup classic snap and build the pulseaudio snap in there
 snap install --devmode --beta classic
 cat <<-EOF > /home/test/build-snap.sh
 #!/bin/sh
 set -ex
 apt update
+apt upgrade --yes --force-yes
 apt install -y --force-yes snapcraft
 cd /home/pulseaudio
 snapcraft clean
