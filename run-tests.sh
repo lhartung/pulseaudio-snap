@@ -17,7 +17,7 @@
 set -ex
 
 image_name=ubuntu-core-16.img
-channel=candidate
+channel=stable
 spread_opts=
 force_new_image=0
 test_from_channel=0
