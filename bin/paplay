@@ -23,6 +23,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/p
 export PULSE_CLIENTCONFIG=$SNAP/etc/pulse/client.conf
 export HOME=$SNAP_DATA/home
 
+unset XDG_RUNTIME_DIR
+
 mkdir -p $HOME
 
 $SNAP/usr/bin/paplay $@
