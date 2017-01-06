@@ -11,13 +11,22 @@ snap install --devmode --beta classic
 cat <<-EOF > /home/test/build-snap.sh
 #!/bin/sh
 set -ex
+
+# FIXME: Enable propose for now until problems with conflicting systemd
+# packages between the Ubuntu Core image ppa and the archive are fixed.
+echo "deb http://archive.ubuntu.com/ubuntu/ xenial-proposed restricted main universe" > /etc/apt/sources.list.d/ubuntu-proposed.list
+
+# Ensure we have the latest updates installed as the core snap
+# may be a bit out of date.
 apt update
 apt upgrade --yes --force-yes
+
 apt install -y --force-yes snapcraft
 cd /home/pulseaudio
 snapcraft clean
 snapcraft
 EOF
+
 chmod +x /home/test/build-snap.sh
 sudo classic /home/test/build-snap.sh
 snap remove classic
