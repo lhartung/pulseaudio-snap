@@ -15,7 +15,7 @@ EXTRA_ARGS=
 
 if [ -e $SNAP_DATA/config/debug ] ; then
     EXTRA_ARGS="$EXTRA_ARGS -vvvv"
-	export LIBASOUND_DEBUG=1
+    export LIBASOUND_DEBUG=1
 fi
 
 $SNAP/usr/bin/pulseaudio \
