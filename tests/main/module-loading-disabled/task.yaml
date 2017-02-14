@@ -1,0 +1,8 @@
+summary: Verify module loading is disabled
+
+description: |
+    As we're running pulseaudio in system mode (see https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/)
+    for more details we have module loading disabled to prevent any client from loading malicious code into the daemon.
+
+execute: |
+    ! /snap/bin/pulseaudio.pactl load-module module-null-sink

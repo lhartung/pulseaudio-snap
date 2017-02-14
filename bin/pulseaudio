@@ -15,12 +15,13 @@ EXTRA_ARGS=
 
 if [ -e $SNAP_DATA/config/debug ] ; then
     EXTRA_ARGS="$EXTRA_ARGS -vvvv"
-	export LIBASOUND_DEBUG=1
+    export LIBASOUND_DEBUG=1
 fi
 
 $SNAP/usr/bin/pulseaudio \
     --exit-idle-time=-1 \
     --disallow-exit=yes \
+    --disallow-module-loading \
     --system \
     -F $SNAP/etc/pulse/default.pa \
     -p $SNAP/usr/lib/pulse-8.0/modules \
