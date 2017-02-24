@@ -19,12 +19,18 @@ apps:
   pactl:
     command: bin/pactl
     plugs: [client, network]
+    aliases:
+      - pactl
   paplay:
     command: bin/paplay
     plugs: [client, home, network]
+    aliases:
+      - paplay
   parec:
     command: bin/parec
     plugs: [client, home, network]
+    aliases:
+      - parec
   config:
     command: bin/config
 
