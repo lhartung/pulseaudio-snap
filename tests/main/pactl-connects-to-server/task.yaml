@@ -1,0 +1,5 @@
+summary: Test pactl is working
+
+execute: |
+    # Does it even work?
+    /snap/bin/pactl info | grep -Pzq 'Server Name: pulseaudio'
