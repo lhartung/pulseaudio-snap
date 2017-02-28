@@ -44,7 +44,6 @@ prepare-each: |
   # Cleanup logs so we can just dump what has happened in the debug-each
   # step below after a test case ran.
   journalctl --rotate
-  sleep .1
   journalctl --vacuum-time=1ms
   dmesg -c > /dev/null
 
