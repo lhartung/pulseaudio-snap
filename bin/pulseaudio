@@ -3,6 +3,7 @@ set -e
 set -x
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/pulse-8.0/modules/
+export PULSE_RUNTIME_PATH=/var/run/pulse
 export PULSE_STATE_PATH=$SNAP_DATA/state
 export ALSA_CONFIG_UCM=$SNAP/usr/share/alsa/ucm
 export ALSA_CONFIG_TPLG=$SNAP/usr/share/alsa/topology
@@ -17,6 +18,13 @@ if [ -e $SNAP_DATA/config/debug ] ; then
     EXTRA_ARGS="$EXTRA_ARGS -vvvv"
     export LIBASOUND_DEBUG=1
 fi
+
+# Reset runtime directory to not keep anything across reboots
+# rm -rf $PULSE_RUNTIME_PATH
+# mkdir -p $PULSE_RUNTIME_PATH
+# As we're running in system mode we need to allow all users
+# at least read access here.
+# chmod 0755 $PULSE_RUNTIME_PATH
 
 $SNAP/usr/bin/pulseaudio \
     --exit-idle-time=-1 \

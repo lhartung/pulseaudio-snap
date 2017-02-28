@@ -21,6 +21,8 @@ fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/pulse-8.0/modules/
 export PULSE_CLIENTCONFIG=$SNAP/etc/pulse/client.conf
+export PULSE_RUNTIME_PATH=/var/run/pulse
+export PULSE_SYSTEM=1
 export HOME=$SNAP_DATA/home
 
 unset XDG_RUNTIME_DIR
