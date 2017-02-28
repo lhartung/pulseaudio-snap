@@ -137,7 +137,7 @@ parts:
       - --with-system-group=root
 
     filesets:
-      pauseaudiofiles:
+      wanted:
         - etc/*
         - lib/*
         - usr/bin/pacat
@@ -153,4 +153,4 @@ parts:
         - usr/share/pulseaudio/*
 
     snap:
-      - $pauseaudiofiles
+      - $wanted
