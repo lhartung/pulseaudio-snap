@@ -1,0 +1,23 @@
+site_title: PulseAudio documentation
+site_logo_url: https://assets.ubuntu.com/v1/c5cb0f8e-picto-ubuntu.svg
+navigation:
+  - title: Introduction
+    children:
+      - title: About PulseAudio
+        location: index.md
+  - title: Install & Configure
+    children:
+      - title: Install PulseAudio
+        location: install-pulseaudio.md
+      - title: Access from other snaps
+        location: access-from-other-snaps.md
+  - title: Reference
+    children:
+  - title: Troubleshoot
+    children:
+      - title: FAQ
+        location: faq.md
+  - title: Release Notes
+    location: release-notes.md
+  - title: Report a Bug
+    location: report-bug.md

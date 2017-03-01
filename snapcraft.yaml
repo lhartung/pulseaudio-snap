@@ -17,17 +17,17 @@ apps:
     daemon: simple
     slots: [service]
   pactl:
-    command: bin/pactl
+    command: bin/client-wrapper usr/bin/pactl
     plugs: [client, network]
     aliases:
       - pactl
   paplay:
-    command: bin/paplay
+    command: bin/client-wrapper usr/bin/paplay
     plugs: [client, home, network]
     aliases:
       - paplay
   parec:
-    command: bin/parec
+    command: bin/client-wrapper usr/bin/parec
     plugs: [client, home, network]
     aliases:
       - parec
@@ -47,9 +47,7 @@ parts:
     plugin: copy
     files:
       bin/pulseaudio: bin/pulseaudio
-      bin/pactl: bin/pactl
-      bin/paplay: bin/paplay
-      bin/parec: bin/parec
+      bin/client-wrapper: bin/client-wrapper
       bin/config: bin/config
       data/copyright: usr/share/doc/pulseaudio/copyright
 
@@ -137,7 +135,7 @@ parts:
       - --with-system-group=root
 
     filesets:
-      pauseaudiofiles:
+      wanted:
         - etc/*
         - lib/*
         - usr/bin/pacat
@@ -153,4 +151,4 @@ parts:
         - usr/share/pulseaudio/*
 
     snap:
-      - $pauseaudiofiles
+      - $wanted

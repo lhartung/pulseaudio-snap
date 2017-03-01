@@ -14,17 +14,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-if [ $(id -u) -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
    echo "This script must be run as root" 1>&2
    exit 1
 fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/pulseaudio:$SNAP/usr/lib/pulse-8.0/modules/
 export PULSE_CLIENTCONFIG=$SNAP/etc/pulse/client.conf
-export HOME=$SNAP_DATA/home
+export PULSE_RUNTIME_PATH=/var/run/pulse
+export PULSE_SYSTEM=1
 
 unset XDG_RUNTIME_DIR
 
-mkdir -p $HOME
+export HOME=$SNAP_DATA/home
+mkdir -p "$HOME"
 
-$SNAP/usr/bin/parec $@
+command="$SNAP/$1"
+shift
+exec "$command" "$@"

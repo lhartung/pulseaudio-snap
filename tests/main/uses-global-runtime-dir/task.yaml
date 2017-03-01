@@ -1,0 +1,35 @@
+summary: Verify pulseaudio and its clients are using a global runtime directory
+
+execute: |
+    # If PULSE_RUNTIME_PATH is not set correctly every client will print a
+    # warning that it can't create a secure directory in the configured runtime
+    # directory. We verify here that no command prints those warning messages
+    # anymore as we now have PULSE_RUNTIME_PATH set for both client and server.
+
+    /snap/bin/pactl list | grep -v "Failed to create secure directory"
+
+    # For playback/recording we need the home interface connected
+    snap connect pulseaudio:home core
+
+    # /var/run is a just a symlink to /run so check both
+    for d in /var/run /run ; do
+        test -e $d/pulse/.config
+        test -e $d/pulse/native
+        test -e $d/pulse/pid
+    done
+
+    pid=$(pidof pulseaudio)
+    test "$pid" = "$(cat /var/run/pulse/pid)"
+
+    # The alsa-utils snap includes some example wav files we can use for playback
+    snap install alsa-utils
+    cp -v /snap/alsa-utils/current/usr/share/sounds/alsa/Front_Center.wav /root
+    chown root:root /root/Front_Center.wav
+    /snap/bin/paplay /root/Front_Center.wav &> /tmp/paplay.log &
+    wait $!
+    [ -s /tmp/paplay.log ] && grep -q -v "Failed to create secure directory" /tmp/paplay.log
+
+    # parec is a little bit more tricky as it needs to be run in background
+    /snap/bin/parec &> /tmp/parec.log &
+    pid=$! ; sleep 1 ; kill -TERM $pid
+    [ -s /tmp/parec.log ] && grep -q -v "Failed to create secure directory" /tmp/parec.log
