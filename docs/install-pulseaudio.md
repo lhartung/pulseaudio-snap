@@ -1,5 +1,5 @@
 ---
-title: "Install NetworkManager"
+title: "Install PulseAudio"
 table_of_contents: True
 ---
 
@@ -16,9 +16,9 @@ You can install the snap with the following command:
  pulseaudio 8.0-3 from 'canonical' installed
 ```
 
-Although the network-manager snap is available from other channels (candidate, beta, edge),
+Although the pulseaudio snap is available from other channels (candidate, beta, edge),
 only the stable version should be used for production devices. Their meaning is internal
-to the development team of the network-manager snap.
+to the development team of the pulseaudio snap.
 
 All necessary plugs and slots will be automatically connected within the
 installation process. You can verify this with:

@@ -19,13 +19,6 @@ if [ -e $SNAP_DATA/config/debug ] ; then
     export LIBASOUND_DEBUG=1
 fi
 
-# Reset runtime directory to not keep anything across reboots
-# rm -rf $PULSE_RUNTIME_PATH
-# mkdir -p $PULSE_RUNTIME_PATH
-# As we're running in system mode we need to allow all users
-# at least read access here.
-# chmod 0755 $PULSE_RUNTIME_PATH
-
 $SNAP/usr/bin/pulseaudio \
     --exit-idle-time=-1 \
     --disallow-exit=yes \
