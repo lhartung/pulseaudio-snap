@@ -8,9 +8,8 @@ execute: |
     systemctl status snap.pulseaudio.pulseaudio | grep -Pzq ': active'
 
     # pactl should be able to reach PulseAudio
-    /snap/bin/pulseaudio.pactl list | grep -Pzq 'Module'
+    /snap/bin/pactl list | grep -Pzq 'Module'
 
     # Ensure all necessary plugs/slots are connected
     snap interfaces | grep -Pzq "pulseaudio:service +pulseaudio:client"
     snap interfaces | grep -P "\-\ +pulseaudio:home"
-

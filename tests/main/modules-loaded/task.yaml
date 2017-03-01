@@ -2,10 +2,9 @@ summary: Test for common PuleAudio modules being loaded
 
 execute: |
     # Check for some obvious PulseAudio modules
-    /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-device-restore'
-    /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-stream-restore'
-    /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-card-restore'
-    /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-switch-on-port-available'
-    /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-rescue-streams'
-    /snap/bin/pulseaudio.pactl list short | grep -Pzq 'module-suspend-on-idle'
-
+    /snap/bin/pactl list short | grep -Pzq 'module-device-restore'
+    /snap/bin/pactl list short | grep -Pzq 'module-stream-restore'
+    /snap/bin/pactl list short | grep -Pzq 'module-card-restore'
+    /snap/bin/pactl list short | grep -Pzq 'module-switch-on-port-available'
+    /snap/bin/pactl list short | grep -Pzq 'module-rescue-streams'
+    /snap/bin/pactl list short | grep -Pzq 'module-suspend-on-idle'

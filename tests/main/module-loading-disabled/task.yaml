@@ -5,4 +5,4 @@ description: |
     for more details we have module loading disabled to prevent any client from loading malicious code into the daemon.
 
 execute: |
-    ! /snap/bin/pulseaudio.pactl load-module module-null-sink
+    ! /snap/bin/pactl load-module module-null-sink

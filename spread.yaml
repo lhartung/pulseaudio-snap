@@ -19,8 +19,10 @@ environment:
     PROJECT_PATH: /home/pulseaudio
     TESTSLIB: $PROJECT_PATH/tests/lib
     SNAP_NAME: pulseaudio
+    SNAP_ARCH: amd64
     # Allow the host to pass the channel to use for the test run
     SNAP_CHANNEL: $(HOST:echo $SNAP_CHANNEL)
+    SNAP_AUTO_ALIASES: pactl parec paplay
 
 backends:
     qemu:
@@ -38,6 +40,17 @@ exclude:
 prepare: |
   . $TESTSLIB/prepare-all.sh
 
+prepare-each: |
+  # Cleanup logs so we can just dump what has happened in the debug-each
+  # step below after a test case ran.
+  journalctl --rotate
+  journalctl --vacuum-time=1ms
+  dmesg -c > /dev/null
+
+debug-each: |
+  journalctl
+  dmesg | grep DENIED || true
+
 suites:
     tests/main/:
         summary: Full-system tests for PulseAudio
@@ -47,4 +60,3 @@ suites:
             . $TESTSLIB/prepare.sh
         restore-each: |
             . $TESTSLIB/restore-each.sh
-
