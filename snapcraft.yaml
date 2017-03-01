@@ -1,5 +1,5 @@
 name: pulseaudio
-version: 8.0-3
+version: 8.0-4
 summary: PulseAudio sound server
 description: |
   PulseAudio, previously known as Polypaudio, is a sound server for POSIX and
