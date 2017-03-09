@@ -14,7 +14,9 @@ mixing several sounds into one are easily achieved using a sound server.
 PulseAudio works as a proxy to
 [ALSA](http://www.alsa-project.org/main/index.php/Main_Page) so if your kernel
 supports ALSA and the needed sound card drivers for your device, the snap should
-work out of the box.
+work out of the box. More information on the kernel configuration needed for
+audio can be found
+[here](https://01.org/linuxgraphics/gfx-docs/drm/sound/alsa-configuration.html).
 
 PulseAudio is an integral part of all relevant modern Linux distributions and used
 in various mobile devices by multiple vendors.

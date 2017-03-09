@@ -20,7 +20,7 @@ recording working. These are
 To use the *pulseaudio* interface you need first to define a plug with it
 in your *snapcraft.yaml* for all relevant applications:
 
-```
+```text
 name: my-audio-snap
 [...]
 apps:
@@ -46,7 +46,7 @@ In order to talk with the PulseAudio service you need to set two environment
 variables to ensure that libpulse finds the socket and other files it requires
 to talk to the service. The environment variables are the following:
 
-```
+```text
 PULSE_RUNTIME_PATH=/var/run/pulse
 PULSE_SYSTEM=1
 
@@ -57,12 +57,34 @@ wrappers around your programs.
 
 ## Example Program
 
-To illustrate these concepts, we have developed a
-[small example](https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pacat-simple)
+To illustrate these concepts, it is worth looking this
+[small example](https://github.com/canonical-system-enablement/pulseaudio-example)
 that uses libpulse and that integrates properly with Ubuntu Core.
 
 You can compile and install following the instrucstions in its
-[README.md](https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/pacat-simple/tree/README.md).
+[README file](https://github.com/canonical-system-enablement/pulseaudio-example).
+
+The [snapcraft.yaml](https://github.com/canonical-system-enablement/pulseaudio-example/blob/master/snapcraft.yaml)
+file contains this information:
+
+```text
+apps:
+  pulseaudio-example:
+    command: bin/client-wrapper usr/bin/pulseaudio-example
+    plugs:
+      - pulseaudio
+      - home
+```
+
+Which shows that we are using the pulseaudio flag and a wrapper.
+[The wrapper](https://github.com/canonical-system-enablement/pulseaudio-example/blob/master/overlay/bin/client-wrapper)
+sets the expected variables:
+
+```text
+export PULSE_RUNTIME_PATH=/var/run/pulse
+export PULSE_SYSTEM=1
+```
+
 An important thing to note is that using PulseAudio needs root permission in
 Core, so you need to put the audio files in some place which belongs to root and
 that can be accessed by the snap, for instance $SNAP_COMMON, which would be
