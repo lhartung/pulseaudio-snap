@@ -7,7 +7,7 @@ table_of_contents: True
 
 ## PulseAudio Daemon
 
-After install the pulseaudio snap, the pulseaudio daemon should be up and
+After install of pulseaudio snap, the pulseaudio daemon should be up and
 running.  We can check its status with systemctl, and something similar to
 
 ```text
@@ -32,9 +32,10 @@ The snap also includes some core pulseaudio utilities:
 is as normally expected (check the linked man pages), but we need to take into
 account that we are running PA in system mode and we need root permissions when
 accessing it. This also implies that files need to be in some place which
-belongs to root and that can be accessed by the snap, like $SNAP_COMMON. For
-instance, if we want to play an audio file that we have in our home folder with
-paplay, the command would be similar to
+belongs to root and that can be accessed by the snap, like
+[$SNAP_COMMON](https://snapcraft.io/docs/reference/env). For instance, if we
+want to play an audio file that we have in our home folder with paplay, the
+command would be similar to
 
 ```text
 $ sudo cp <audio-file> /var/snap/pacat-simple/common/

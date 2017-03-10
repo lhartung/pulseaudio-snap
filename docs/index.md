@@ -17,7 +17,7 @@ supports ALSA and the needed sound card drivers for your device, the snap should
 work out of the box. More information on the kernel configuration needed for
 audio can be found
 [here](https://www.kernel.org/doc/html/latest/sound/alsa-configuration.html).
-Of course, Ubuntu Kernel comes with all thins already enabled.
+Of course, Ubuntu Kernel comes with all this already enabled.
 
 PulseAudio is an integral part of all relevant modern Linux distributions and used
 in various mobile devices by multiple vendors.
