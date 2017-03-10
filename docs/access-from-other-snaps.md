@@ -57,12 +57,13 @@ wrappers around your programs.
 
 ## Example Program
 
-To illustrate these concepts, it is worth looking this
-[small example](https://github.com/canonical-system-enablement/pulseaudio-example)
-that uses libpulse and that integrates properly with Ubuntu Core.
+To illustrate these concepts, it is worth looking this [small
+example](https://github.com/canonical-system-enablement/pulseaudio-example) that
+uses [libpulse](https://freedesktop.org/software/pulseaudio/doxygen/) and that
+integrates properly with Ubuntu Core.
 
 You can compile and install following the instructions in its
-[README file](https://github.com/canonical-system-enablement/pulseaudio-example).
+[README file](https://github.com/canonical-system-enablement/pulseaudio-example/blob/master/README.md).
 
 The example is quite straightforward, although we can emphasize a couple of aspects.
 
@@ -89,7 +90,7 @@ export PULSE_SYSTEM=1
 ```
 
 Second, as explained in the [previous section](using-pulseaudio.md), for using
-PulseAudio we need root permissions in Core, so we have to put the audio files
-in some place which belongs to root and that can be accessed by the snap, for
-instance $SNAP_COMMON, which would be /var/snap/pacat-simple/common in the
+PulseAudio we need root permissions in Ubuntu Core, so we have to put the audio
+files in some place which belongs to root and that can be accessed by the snap,
+for instance $SNAP_COMMON, which would be /var/snap/pacat-simple/common in the
 example snap.

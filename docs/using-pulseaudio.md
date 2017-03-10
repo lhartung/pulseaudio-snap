@@ -33,10 +33,11 @@ is as normally expected (check the linked man pages), but we need to take into
 account that we are running PA in system mode and we need root permissions when
 accessing it. This also implies that files need to be in some place which
 belongs to root and that can be accessed by the snap, like $SNAP_COMMON. For
-instance, if we want to play an audio file with paplay, the command would be
-similar to
+instance, if we want to play an audio file that we have in our home folder with
+paplay, the command would be similar to
 
 ```text
+$ sudo cp <audio-file> /var/snap/pacat-simple/common/
 $ sudo paplay /var/snap/pacat-simple/common/<audio-file>
 ```
 
