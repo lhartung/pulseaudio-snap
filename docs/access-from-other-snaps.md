@@ -61,10 +61,13 @@ To illustrate these concepts, it is worth looking this
 [small example](https://github.com/canonical-system-enablement/pulseaudio-example)
 that uses libpulse and that integrates properly with Ubuntu Core.
 
-You can compile and install following the instrucstions in its
+You can compile and install following the instructions in its
 [README file](https://github.com/canonical-system-enablement/pulseaudio-example).
 
-The [snapcraft.yaml](https://github.com/canonical-system-enablement/pulseaudio-example/blob/master/snapcraft.yaml)
+The example is quite straightforward, although we can emphasize a couple of aspects.
+
+First, note the
+[snapcraft.yaml](https://github.com/canonical-system-enablement/pulseaudio-example/blob/master/snapcraft.yaml)
 file contains this information:
 
 ```text
@@ -76,7 +79,7 @@ apps:
       - home
 ```
 
-Which shows that we are using the pulseaudio flag and a wrapper.
+Which shows that we are using the pulseaudio plug and a wrapper.
 [The wrapper](https://github.com/canonical-system-enablement/pulseaudio-example/blob/master/overlay/bin/client-wrapper)
 sets the expected variables:
 
@@ -85,7 +88,8 @@ export PULSE_RUNTIME_PATH=/var/run/pulse
 export PULSE_SYSTEM=1
 ```
 
-An important thing to note is that using PulseAudio needs root permission in
-Core, so you need to put the audio files in some place which belongs to root and
-that can be accessed by the snap, for instance $SNAP_COMMON, which would be
-/var/snap/pacat-simple/common in the example snap.
+Second, as explained in the [previous section](using-pulseaudio.md), for using
+PulseAudio we need root permissions in Core, so we have to put the audio files
+in some place which belongs to root and that can be accessed by the snap, for
+instance $SNAP_COMMON, which would be /var/snap/pacat-simple/common in the
+example snap.

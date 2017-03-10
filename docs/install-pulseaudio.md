@@ -49,4 +49,5 @@ Now you have PulseAudio successfully installed.
 
 ## Next Steps
 
+ * [Using PulseAudio](using-pulseaudio.md)
  * [Access from other snaps](access-from-other-snaps.md)
