@@ -13,8 +13,6 @@ navigation:
         location: using-pulseaudio.md
       - title: Access from other snaps
         location: access-from-other-snaps.md
-  - title: Reference
-    children:
   - title: Troubleshoot
     children:
       - title: FAQ
