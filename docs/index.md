@@ -11,6 +11,14 @@ as it passes between your application and your hardware. Things like transferrin
 the audio to a different machine, changing the sample format or channel count and
 mixing several sounds into one are easily achieved using a sound server.
 
+PulseAudio works as a proxy to
+[ALSA](http://www.alsa-project.org/main/index.php/Main_Page) so if your kernel
+supports ALSA and the needed sound card drivers for your device, the snap should
+work out of the box. More information on the kernel configuration needed for
+audio can be found
+[here](https://www.kernel.org/doc/html/latest/sound/alsa-configuration.html).
+Of course, Ubuntu Kernel comes with all this already enabled.
+
 PulseAudio is an integral part of all relevant modern Linux distributions and used
 in various mobile devices by multiple vendors.
 
