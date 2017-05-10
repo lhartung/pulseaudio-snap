@@ -23,7 +23,7 @@ install_snap_under_test() {
 	fi
 	if [ -n "$SNAP_AUTO_ALIASES" ]; then
 		for alias in $SNAP_AUTO_ALIASES ; do
-			snap alias $SNAP_NAME $alias
+			snap alias $SNAP_NAME.$alias $alias
 		done
 	fi
 }
