@@ -28,7 +28,7 @@ install_snap_under_test() {
 			if dpkg --compare-versions $snapd_version lt 2.25 ; then
 				target=$SNAP_NAME
 			fi
-			snap alias $SNAP_NAME.$alias $alias
+			snap alias $target $alias
 		done
 	fi
 }
