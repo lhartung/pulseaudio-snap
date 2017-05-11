@@ -20,19 +20,19 @@ apps:
     command: bin/client-wrapper usr/bin/pactl
     plugs: [client, network]
     # NOTE: This is deprecated with snapd 2.25 but needs to stay to
-    # gurantee all clients are updated correctly.
+    # guarantee all clients are updated correctly.
     aliases: [pactl]
   paplay:
     command: bin/client-wrapper usr/bin/paplay
     plugs: [client, home, network]
     # NOTE: This is deprecated with snapd 2.25 but needs to stay to
-    # gurantee all clients are updated correctly.
+    # guarantee all clients are updated correctly.
     aliases: [paplay]
   parec:
     command: bin/client-wrapper usr/bin/parec
     plugs: [client, home, network]
     # NOTE: This is deprecated with snapd 2.25 but needs to stay to
-    # gurantee all clients are updated correctly.
+    # guarantee all clients are updated correctly.
     aliases: [parec]
   config:
     command: bin/config
