@@ -22,8 +22,13 @@ install_snap_under_test() {
 		snap install --dangerous ${PROJECT_PATH}/${SNAP_NAME}_*_${SNAP_ARCH}.snap
 	fi
 	if [ -n "$SNAP_AUTO_ALIASES" ]; then
+		snapd_version=$(snap version | awk '/^snapd / {print $2; exit}')
 		for alias in $SNAP_AUTO_ALIASES ; do
-			snap alias $SNAP_NAME $alias
+			target=$SNAP_NAME.$alias
+			if dpkg --compare-versions $snapd_version lt 2.25 ; then
+				target=$SNAP_NAME
+			fi
+			snap alias $target $alias
 		done
 	fi
 }
