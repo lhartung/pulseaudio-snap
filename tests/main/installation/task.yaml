@@ -7,6 +7,9 @@ execute: |
     wait_for_pulseaudio
     systemctl status snap.pulseaudio.pulseaudio | grep -Pzq ': active'
 
+    # Make sure the daemon's parent is PID 1
+    pgrep -P 1 pulseaudio
+
     # pactl should be able to reach PulseAudio
     /snap/bin/pactl list | grep -Pzq 'Module'
 
