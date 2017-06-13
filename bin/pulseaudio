@@ -19,7 +19,7 @@ if [ -e $SNAP_DATA/config/debug ] ; then
     export LIBASOUND_DEBUG=1
 fi
 
-$SNAP/usr/bin/pulseaudio \
+exec $SNAP/usr/bin/pulseaudio \
     --exit-idle-time=-1 \
     --disallow-exit=yes \
     --disallow-module-loading \
