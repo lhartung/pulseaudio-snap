@@ -109,6 +109,7 @@ parts:
       - libudev-dev
       - libasyncns-dev
       - libxcb1-dev
+      - libsbc-dev
 
     configflags:
       - --prefix=/usr
@@ -121,7 +122,6 @@ parts:
       - --disable-orc
       - --disable-gconf
       - --disable-bluez4
-      - --disable-bluez5
       - --disable-esound
       - --disable-adrian-aec
       - --disable-gtk3
@@ -129,7 +129,6 @@ parts:
       - --disable-systemd-login
       - --without-caps
       - --disable-webrtc-aec
-      - --disable-dbus
       - --disable-oss-output
       - --disable-oss-wrapper
       - --disable-jack
